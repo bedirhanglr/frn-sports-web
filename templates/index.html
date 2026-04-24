@@ -24,14 +24,15 @@
             letter-spacing: 3px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         /* --- X (Twitter) Takip Et Butonu Tasarımı --- */
         .x-takip-btn {
             position: absolute;
             right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
             background-color: #000000;
             color: #ffffff;
             padding: 8px 18px;
@@ -55,7 +56,7 @@
             background-color: #ccff00;
             color: #000000;
             border-color: #ccff00;
-            transform: translateY(-50%) scale(1.05);
+            transform: scale(1.05);
         }
 
         .container {
@@ -110,7 +111,6 @@
             100% { opacity: 1; }
         }
 
-        /* Maç Alt Detay Metinleri Konteyneri */
         .mac-detay {
             margin: 10px 0;
         }
@@ -138,18 +138,18 @@
 
         .video-ekrani iframe {
             position: absolute;
-            top: -280px; 
+            top: -240px; 
             left: 0;
             width: 100%;
-            height: calc(100% + 280px);
+            height: calc(100% + 240px);
             border: none;
             border-radius: 8px;
         }
 
-        /* --- YENİ EKLENEN YAYIN UYARISI TASARIMI --- */
+        /* YAYIN UYARISI TASARIMI */
         .yayin-uyarisi {
-            background-color: #fff8e1; /* Dikkat çekici ama göz yormayan açık sarı/krem arka plan */
-            border-left: 4px solid #ffb300; /* Sol tarafta uyarı rengi sarı bir çizgi */
+            background-color: #fff8e1;
+            border-left: 4px solid #ffb300;
             color: #555;
             font-size: 0.9em;
             padding: 12px 15px;
@@ -159,7 +159,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         .yayin-uyarisi strong {
-            color: #d32f2f; /* Dikkat çekmesi için önemli kısımlar kırmızı */
+            color: #d32f2f;
         }
 
         /* Tüm Maçlar Listesi */
@@ -197,17 +197,55 @@
             font-weight: bold;
             transition: 0.3s;
             white-space: nowrap;
+            box-sizing: border-box; /* Mobilde taşmayı önler */
         }
         .btn:hover {
             background-color: #ccff00;
             color: #1b5e20;
+        }
+
+        /* =========================================
+           MOBİL UYUMLULUK (RESPONSIVE DESIGN)
+           ========================================= */
+        @media (max-width: 768px) {
+            /* Üst Menüyü mobilde alt alta diz */
+            header {
+                font-size: 2em;
+                padding: 15px 0;
+                flex-direction: column;
+                gap: 15px;
+            }
+            /* X Butonunu sağdan al, ortaya koy */
+            .x-takip-btn {
+                position: relative;
+                right: auto;
+            }
+            /* Videoyu telefon ekranına sığacak şekilde kısalt */
+            .video-ekrani {
+                height: 250px; 
+            }
+            /* Günün maçı yazısını biraz küçült */
+            .gunun-maci h2 {
+                font-size: 1.3em;
+            }
+            /* Tüm maçlar kartını dikey hale getir */
+            .mac-karti {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            /* İzle butonunu mobilde ekranı tam kaplayacak hale getir */
+            .mac-karti .btn {
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
 
     <header>
-        FRN SPORTS
+        <span>FRN SPORTS</span>
         
         <a href="https://x.com/frnsports" target="_blank" class="x-takip-btn" title="FRN SPORTS X Hesabı">
             <svg viewBox="0 0 24 24">

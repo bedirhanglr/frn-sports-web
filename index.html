@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRN SPORTS | Tenis Maçları</title>
+    <style>
+        /* Genel sayfa ayarları */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        /* Üst Menü */
+        header {
+            background-color: #1b5e20;
+            color: #ccff00;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 2.5em;
+            font-weight: 900;
+            letter-spacing: 3px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        /* --- X (Twitter) Takip Et Butonu Tasarımı --- */
+        .x-takip-btn {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #000000;
+            color: #ffffff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            border: 2px solid #333;
+        }
+        .x-takip-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        .x-takip-btn:hover {
+            background-color: #ccff00;
+            color: #000000;
+            border-color: #ccff00;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px 20px 20px;
+        }
+        h2 {
+            color: #1b5e20;
+            border-bottom: 3px solid #ccff00;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        /* Çerçeveli Etiket Tasarımı */
+        .detay-etiket {
+            padding: 4px 10px;
+            border: 2px solid #cfd8dc; 
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #455a64; 
+            background-color: #ffffff;
+            display: inline-block;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+
+        /* Durum Etiketleri (Canlı, Bitti vb.) */
+        .durum {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: white;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .durum-canli {
+            background-color: #d32f2f;
+            animation: yanip-sonme 1.5s infinite;
+        }
+        .durum-baslamadi {
+            background-color: #1976d2;
+        }
+        .durum-bitti {
+            background-color: #757575;
+        }
+        @keyframes yanip-sonme {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* Maç Alt Detay Metinleri Konteyneri */
+        .mac-detay {
+            margin: 10px 0;
+        }
+
+        /* Günün Maçı Kutusu */
+        .gunun-maci {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-left: 8px solid #ccff00;
+            text-align: center;
+        }
+
+        /* VİDEO EKRANI (Reklam Kırpma) */
+        .video-ekrani {
+            width: 100%;
+            height: 450px;
+            background-color: #111;
+            border-radius: 8px;
+            margin: 15px 0 0 0;
+            overflow: hidden; 
+            position: relative; 
+        }
+
+        .video-ekrani iframe {
+            position: absolute;
+            top: -280px; 
+            left: 0;
+            width: 100%;
+            height: calc(100% + 280px);
+            border: none;
+            border-radius: 8px;
+        }
+
+        /* --- YENİ EKLENEN YAYIN UYARISI TASARIMI --- */
+        .yayin-uyarisi {
+            background-color: #fff8e1; /* Dikkat çekici ama göz yormayan açık sarı/krem arka plan */
+            border-left: 4px solid #ffb300; /* Sol tarafta uyarı rengi sarı bir çizgi */
+            color: #555;
+            font-size: 0.9em;
+            padding: 12px 15px;
+            margin-top: 15px;
+            border-radius: 6px;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .yayin-uyarisi strong {
+            color: #d32f2f; /* Dikkat çekmesi için önemli kısımlar kırmızı */
+        }
+
+        /* Tüm Maçlar Listesi */
+        .tum-maclar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .mac-karti {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #1b5e20;
+        }
+        .mac-sol {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .mac-sol strong {
+            font-size: 1.2em;
+        }
+        
+        /* Butonlar */
+        .btn {
+            background-color: #1b5e20;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+        .btn:hover {
+            background-color: #ccff00;
+            color: #1b5e20;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        FRN SPORTS
+        
+        <a href="https://x.com/frnsports" target="_blank" class="x-takip-btn" title="FRN SPORTS X Hesabı">
+            <svg viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 24.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            <span>Takip Et</span>
+        </a>
+    </header>
+
+    <div class="container">
+        
+        <h2>🎾 GÜNÜN MAÇI</h2>
+        <div class="gunun-maci">
+            <h2>{{ gunun_maci.baslik }}</h2>
+            
+            <div class="mac-detay">
+                <span class="detay-etiket">🏆 {{ gunun_maci.turnuva }}</span>
+                <span class="detay-etiket">⏰ {{ gunun_maci.saat }}</span>
+                
+                {% if gunun_maci.durum == "Canlı" %}
+                    <span class="durum durum-canli">🔴 CANLI YAYIN</span>
+                {% elif gunun_maci.durum == "Bitti" %}
+                    <span class="durum durum-bitti">BİTTİ</span>
+                {% else %}
+                    <span class="durum durum-baslamadi">BAŞLAMADI</span>
+                {% endif %}
+            </div>
+            
+            <div class="video-ekrani">
+                <iframe src="{{ gunun_maci.embed_link }}" title="Maç Yayını" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+
+            <div class="yayin-uyarisi">
+                ℹ️ <strong>Bilgilendirme:</strong> Başlatma butonuna <strong>3. tıklayışınızda</strong> yayın açılacaktır. Çıkan popup reklamlarla sitemizin hiçbir alakası yoktur. İyi seyirler!
+            </div>
+        </div>
+
+        <h2>📅 TÜM MAÇLAR</h2>
+        <div class="tum-maclar">
+            
+            {% for mac in tum_maclar %}
+            <div class="mac-karti">
+                <div class="mac-sol">
+                    <strong>{{ mac.baslik }}</strong>
+                    
+                    <div class="mac-detay" style="margin: 5px 0;">
+                        <span class="detay-etiket">🏆 {{ mac.turnuva }}</span>
+                        <span class="detay-etiket">⏰ {{ mac.saat }}</span>
+                    </div>
+                    
+                    <div>
+                        {% if mac.durum == "Canlı" %}
+                            <span class="durum durum-canli">🔴 CANLI</span>
+                        {% elif mac.durum == "Bitti" %}
+                            <span class="durum durum-bitti">BİTTİ</span>
+                        {% else %}
+                            <span class="durum durum-baslamadi">BAŞLAMADI</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <a href="#" class="btn">İzle</a>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

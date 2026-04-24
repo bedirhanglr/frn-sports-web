@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ mac.baslik }} | Canlı İzle</title>
+    <style>
+        /* Arka planı tamamen siyah yap ve ekran kaydırmayı kapat */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+        
+        .sinema-ekrani {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Taraftarium sitesinin üstündeki reklamları/menüleri kırpma işlemi */
+        .sinema-ekrani iframe {
+            position: absolute;
+            top: -150px; /* EĞER TARAFTARİUM'UN REKLAMI HALA GÖRÜNÜYORSA BU SAYIYI BÜYÜT (Örn: -200px) */
+            left: 0;
+            width: 100%;
+            height: calc(100% + 150px); /* Üstteki sayı ile aynı olmalı */
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sinema-ekrani">
+        <iframe src="{{ mac.embed_link }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+</body>
+</html>

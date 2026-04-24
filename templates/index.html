@@ -85,7 +85,7 @@
             margin-top: 5px;
         }
 
-        /* Durum Etiketleri (Canlı, Bitti vb.) */
+        /* Durum Etiketleri */
         .durum {
             padding: 4px 10px;
             border-radius: 12px;
@@ -95,25 +95,16 @@
             display: inline-block;
             margin-top: 5px;
         }
-        .durum-canli {
-            background-color: #d32f2f;
-            animation: yanip-sonme 1.5s infinite;
-        }
-        .durum-baslamadi {
-            background-color: #1976d2;
-        }
-        .durum-bitti {
-            background-color: #757575;
-        }
+        .durum-canli { background-color: #d32f2f; animation: yanip-sonme 1.5s infinite; }
+        .durum-baslamadi { background-color: #1976d2; }
+        .durum-bitti { background-color: #757575; }
         @keyframes yanip-sonme {
             0% { opacity: 1; }
             50% { opacity: 0.4; }
             100% { opacity: 1; }
         }
 
-        .mac-detay {
-            margin: 10px 0;
-        }
+        .mac-detay { margin: 10px 0; }
 
         /* Günün Maçı Kutusu */
         .gunun-maci {
@@ -125,11 +116,11 @@
             text-align: center;
         }
 
-        /* VİDEO EKRANI (Reklam Kırpma) */
+        /* VİDEO EKRANI (Masaüstü Reklam Kırpma) */
         .video-ekrani {
             width: 100%;
             height: 450px;
-            background-color: #111;
+            background-color: #000; /* Tam ekranda kenarlar siyah olsun diye 000 yapıldı */
             border-radius: 8px;
             margin: 15px 0 0 0;
             overflow: hidden; 
@@ -138,7 +129,7 @@
 
         .video-ekrani iframe {
             position: absolute;
-            top: -240px; 
+            top: -240px; /* Masaüstü kırpma değeri */
             left: 0;
             width: 100%;
             height: calc(100% + 240px);
@@ -158,9 +149,7 @@
             text-align: left;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .yayin-uyarisi strong {
-            color: #d32f2f;
-        }
+        .yayin-uyarisi strong { color: #d32f2f; }
 
         /* Tüm Maçlar Listesi */
         .tum-maclar {
@@ -183,9 +172,7 @@
             flex-direction: column;
             gap: 4px;
         }
-        .mac-sol strong {
-            font-size: 1.2em;
-        }
+        .mac-sol strong { font-size: 1.2em; }
         
         /* Butonlar */
         .btn {
@@ -197,44 +184,63 @@
             font-weight: bold;
             transition: 0.3s;
             white-space: nowrap;
-            box-sizing: border-box; /* Mobilde taşmayı önler */
+            box-sizing: border-box;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
         }
         .btn:hover {
             background-color: #ccff00;
             color: #1b5e20;
+        }
+        .btn-tam-ekran {
+            background-color: #d32f2f;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 1.1em;
+            display: none; /* Masaüstünde gizli kalsın, sadece mobilde çıksın */
+        }
+        .btn-tam-ekran:hover {
+            background-color: #b71c1c;
+            color: white;
         }
 
         /* =========================================
            MOBİL UYUMLULUK (RESPONSIVE DESIGN)
            ========================================= */
         @media (max-width: 768px) {
-            /* Üst Menüyü mobilde alt alta diz */
             header {
                 font-size: 2em;
                 padding: 15px 0;
                 flex-direction: column;
                 gap: 15px;
             }
-            /* X Butonunu sağdan al, ortaya koy */
             .x-takip-btn {
                 position: relative;
                 right: auto;
             }
-            /* Videoyu telefon ekranına sığacak şekilde kısalt */
+            
+            /* MOBİLDE VİDEO VE KIRPMA AYARLARI */
             .video-ekrani {
-                height: 250px; 
+                height: 220px; /* Telefon ekranı yüksekliği */
+                border-radius: 0; /* Tam ekranda kenarlar tam otursun diye */
             }
-            /* Günün maçı yazısını biraz küçült */
-            .gunun-maci h2 {
-                font-size: 1.3em;
+            .video-ekrani iframe {
+                top: -120px; /* DİKKAT: Mobilde yayıncı sitenin reklamı hala görünüyorsa bu sayıyı (-150px, -180px gibi) artırarak test edebilirsin */
+                height: calc(100% + 120px);
             }
-            /* Tüm maçlar kartını dikey hale getir */
+            
+            /* Tam ekran butonunu mobilde göster */
+            .btn-tam-ekran {
+                display: block; 
+            }
+
+            .gunun-maci h2 { font-size: 1.3em; }
             .mac-karti {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
-            /* İzle butonunu mobilde ekranı tam kaplayacak hale getir */
             .mac-karti .btn {
                 width: 100%;
                 text-align: center;
@@ -274,9 +280,11 @@
                 {% endif %}
             </div>
             
-            <div class="video-ekrani">
+            <div class="video-ekrani" id="yayinKutusu">
                 <iframe src="{{ gunun_maci.embed_link }}" title="Maç Yayını" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
+
+            <button onclick="tamEkranYap()" class="btn btn-tam-ekran">📱 YAYINI TAM EKRAN YAP</button>
 
             <div class="yayin-uyarisi">
                 ℹ️ <strong>Bilgilendirme:</strong> Başlatma butonuna <strong>3. tıklayışınızda</strong> yayın açılacaktır. Çıkan popup reklamlarla sitemizin hiçbir alakası yoktur. İyi seyirler!
@@ -313,6 +321,19 @@
         </div>
 
     </div>
+
+    <script>
+        function tamEkranYap() {
+            var yayin = document.getElementById("yayinKutusu");
+            if (yayin.requestFullscreen) {
+                yayin.requestFullscreen();
+            } else if (yayin.webkitRequestFullscreen) { /* Safari */
+                yayin.webkitRequestFullscreen();
+            } else if (yayin.msRequestFullscreen) { /* IE11 */
+                yayin.msRequestFullscreen();
+            }
+        }
+    </script>
 
 </body>
 </html>

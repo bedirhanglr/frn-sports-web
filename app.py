@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def ana_sayfa():
-    # Günün maçının bilgileri Sinner vs. Bonzi olarak güncellendi
+    # Günün maçının bilgileri Sinner vs. Bonzi (Aynı kalıyor)
     gunun_maci = {
         "baslik": "Sinner vs. Bonzi",
         "turnuva": "ATP 1000 Madrid",
@@ -13,19 +13,13 @@ def ana_sayfa():
         "embed_link": "https://sportswin.click/play.php?atp-tour/atp-madrid-jannik-sinner-vs-benjamin-bonzi-stream-1"
     }
 
-    # Diğer maçların listesi (İstersen buradaki maçları da güncelleyebilirsin)
+    # Diğer maçların listesi (Sadece Zeynep Sönmez eklendi, diğerleri silindi)
     tum_maclar = [
         {
-            "baslik": "Alcaraz vs. Medvedev",
-            "turnuva": "ATP 1000 Madrid",
-            "saat": "21:00",
+            "baslik": "🇹🇷 Zeynep Sönmez vs. Solana Sierra",
+            "turnuva": "WTA 1000 Madrid - Son 32",
+            "saat": "25 Nisan 12:00",
             "durum": "Başlamadı"
-        },
-        {
-            "baslik": "Djokovic vs. Nadal",
-            "turnuva": "Çeyrek Final",
-            "saat": "14:30",
-            "durum": "Bitti"
         }
     ]
 
